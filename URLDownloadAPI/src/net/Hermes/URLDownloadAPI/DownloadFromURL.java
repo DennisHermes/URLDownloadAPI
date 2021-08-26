@@ -4,16 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class DownloadFromURL {
 
@@ -23,19 +17,9 @@ public class DownloadFromURL {
 			if (!folder.exists()) {
 	            folder.mkdir();
 	        }
-			String versionTitle = null;
-		    try {
-				URL url = new URL(urlString);
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				connection.setRequestMethod("POST");
-				InputStreamReader reader_0 = new InputStreamReader(connection.getInputStream());
-				JsonObject JsonObject = new JsonParser().parse(reader_0).getAsJsonObject();
-				versionTitle = JsonObject.get("LatestVersion").getAsString();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
 	        final URL url = new URL(urlString);
 	        BufferedInputStream  in = new BufferedInputStream(url.openStream());
+			@SuppressWarnings("resource")
 			FileOutputStream fout = new FileOutputStream(folder.getAbsolutePath() + File.separator + "AdRewards.jar");
 	
 	        final byte[] data = new byte[1024];
